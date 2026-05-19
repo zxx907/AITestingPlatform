@@ -7,19 +7,26 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import DashboardLayout from "./components/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
+import TestCaseGenerator from "./pages/TestCaseGenerator";
+import APITesting from "./pages/APITesting";
+import ScriptGenerator from "./pages/ScriptGenerator";
+import PerformanceTesting from "./pages/PerformanceTesting";
+import BugAnalysis from "./pages/BugAnalysis";
+import SQLGenerator from "./pages/SQLGenerator";
+import TestReport from "./pages/TestReport";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path="/" component={() => <DashboardLayout><Dashboard /></DashboardLayout>} />
-      <Route path="/test-case-generator" component={() => <DashboardLayout><div className="p-8">测试用例生成 - 开发中</div></DashboardLayout>} />
-      <Route path="/api-testing" component={() => <DashboardLayout><div className="p-8">接口测试 - 开发中</div></DashboardLayout>} />
-      <Route path="/script-generator" component={() => <DashboardLayout><div className="p-8">脚本生成 - 开发中</div></DashboardLayout>} />
-      <Route path="/performance-testing" component={() => <DashboardLayout><div className="p-8">性能测试 - 开发中</div></DashboardLayout>} />
-      <Route path="/bug-analysis" component={() => <DashboardLayout><div className="p-8">Bug 分析 - 开发中</div></DashboardLayout>} />
-      <Route path="/sql-generator" component={() => <DashboardLayout><div className="p-8">SQL 生成 - 开发中</div></DashboardLayout>} />
-      <Route path="/test-report" component={() => <DashboardLayout><div className="p-8">测试报告 - 开发中</div></DashboardLayout>} />
+      <Route path="/test-case-generator" component={() => <DashboardLayout><TestCaseGenerator /></DashboardLayout>} />
+      <Route path="/api-testing" component={() => <DashboardLayout><APITesting /></DashboardLayout>} />
+      <Route path="/script-generator" component={() => <DashboardLayout><ScriptGenerator /></DashboardLayout>} />
+      <Route path="/performance-testing" component={() => <DashboardLayout><PerformanceTesting /></DashboardLayout>} />
+      <Route path="/bug-analysis" component={() => <DashboardLayout><BugAnalysis /></DashboardLayout>} />
+      <Route path="/sql-generator" component={() => <DashboardLayout><SQLGenerator /></DashboardLayout>} />
+      <Route path="/test-report" component={() => <DashboardLayout><TestReport /></DashboardLayout>} />
       <Route path="/404" component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
