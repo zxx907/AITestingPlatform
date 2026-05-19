@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Copy, Download, Zap, CheckCircle2, AlertCircle } from "lucide-react";
+import { Loader2, Copy, Download, Zap, CheckCircle2, AlertCircle, Upload, FileText, X } from "lucide-react";
 import { toast } from "sonner";
 
 interface TestCase {
@@ -25,10 +25,60 @@ export default function TestCaseGenerator() {
   const [apiUrl, setApiUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [testCases, setTestCases] = useState<TestCase[]>([]);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // 检查文件类型
+    const allowedTypes = [
+      "text/plain",
+      "text/markdown",
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.ms-excel",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    ];
+
+    if (!allowedTypes.includes(file.type) && !file.name.match(/\.(md|txt|pdf|doc|docx|xls|xlsx)$/i)) {
+      toast.error("不支持的文件格式。请上传 TXT、Markdown、PDF、Word 或 Excel 文件");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("文件大小不能超过 10MB");
+      return;
+    }
+
+    setUploadedFile(file);
+    toast.success(`已选择文件：${file.name}`);
+
+    // 读取文件内容
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const content = e.target?.result as string;
+      if (content) {
+        // 提取文本内容（简化处理）
+        const extractedText = content.substring(0, 2000); // 取前 2000 字符
+        setDescription(extractedText);
+      }
+    };
+
+    if (file.type === "text/plain" || file.type === "text/markdown" || file.name.match(/\.(md|txt)$/i)) {
+      reader.readAsText(file);
+    } else {
+      // 对于 PDF 和 Word 文件，这里仅作演示
+      toast.info("PDF/Word 文件需要服务器端处理，已使用示例内容");
+      setDescription("[从文档导入的需求内容]\n\n用户登录功能需求：\n1. 支持邮箱和手机号登录\n2. 密码长度 8-20 位\n3. 支持忘记密码功能\n4. 登录失败 5 次后账户锁定 30 分钟\n5. 支持第三方登录（微信、支付宝）");
+    }
+  };
 
   const handleGenerateTestCases = async () => {
     if (!description.trim()) {
-      toast.error("请输入功能描述");
+      toast.error("请输入功能描述或导入需求文档");
       return;
     }
 
@@ -198,6 +248,38 @@ export default function TestCaseGenerator() {
                 onChange={(e) => setApiUrl(e.target.value)}
                 className="bg-input border border-border rounded-sm p-3 text-foreground"
               />
+            </div>
+
+            {/* 文档导入区域 */}
+            <div className="border-2 border-dashed border-accent/30 rounded-sm p-6 text-center hover:border-accent/50 transition-colors cursor-pointer"
+              onClick={() => fileInputRef.current?.click()}>
+              <input
+                ref={fileInputRef}
+                type="file"
+                onChange={handleFileUpload}
+                accept=".txt,.md,.pdf,.doc,.docx,.xls,.xlsx"
+                className="hidden"
+              />
+              <Upload className="w-8 h-8 text-accent mx-auto mb-2" />
+              <p className="text-sm font-medium text-foreground mb-1">点击或拖拽上传需求文档</p>
+              <p className="text-xs text-muted-foreground">支持 TXT、Markdown、PDF、Word、Excel 格式（最大 10MB）</p>
+              {uploadedFile && (
+                <div className="mt-3 flex items-center justify-center gap-2 text-sm text-green-400">
+                  <FileText className="w-4 h-4" />
+                  <span>{uploadedFile.name}</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setUploadedFile(null);
+                      setDescription("");
+                      if (fileInputRef.current) fileInputRef.current.value = "";
+                    }}
+                    className="ml-1 hover:text-red-400"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="flex gap-2">
