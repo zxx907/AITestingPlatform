@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* ==================== 建筑蓝图美学主题系统 ==================== */
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -43,83 +46,126 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  /* 建筑蓝图色彩系统 */
+  --blueprint-dark: #0f1b2e;
+  --blueprint-base: #1a2a4a;
+  --blueprint-light: #2d3e5f;
+  --blueprint-lighter: #3d4f7a;
+  
+  /* 技术蓝强调色 */
+  --tech-cyan: #00d4ff;
+  --tech-blue: #0099ff;
+  --tech-light: #00e5ff;
+  
+  /* 白色与灰度 */
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  
+  /* 功能色 */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+  
+  /* 主题变量 */
+  --primary: #0099ff;
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #0099ff;
+  --sidebar-primary-foreground: #ffffff;
+  --chart-1: #00d4ff;
+  --chart-2: #0099ff;
+  --chart-3: #0077cc;
+  --chart-4: #005fa3;
+  --chart-5: #003d7a;
+  --radius: 0.375rem;
+  
+  /* 深色模式 - 建筑蓝图 */
+  --background: #1a2a4a;
+  --foreground: #ffffff;
+  --card: #2d3e5f;
+  --card-foreground: #ffffff;
+  --popover: #2d3e5f;
+  --popover-foreground: #ffffff;
+  --secondary: #3d4f7a;
+  --secondary-foreground: #e5e7eb;
+  --muted: #6b7280;
+  --muted-foreground: #d1d5db;
+  --accent: #00d4ff;
+  --accent-foreground: #0f1b2e;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #3d4f7a;
+  --input: #2d3e5f;
+  --ring: #00d4ff;
+  --sidebar: #2d3e5f;
+  --sidebar-foreground: #ffffff;
+  --sidebar-accent: #00d4ff;
+  --sidebar-accent-foreground: #0f1b2e;
+  --sidebar-border: #3d4f7a;
+  --sidebar-ring: #00d4ff;
 }
 
 .dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  --background: #1a2a4a;
+  --foreground: #ffffff;
+  --card: #2d3e5f;
+  --card-foreground: #ffffff;
+  --popover: #2d3e5f;
+  --popover-foreground: #ffffff;
+  --secondary: #3d4f7a;
+  --secondary-foreground: #e5e7eb;
+  --muted: #6b7280;
+  --muted-foreground: #d1d5db;
+  --accent: #00d4ff;
+  --accent-foreground: #0f1b2e;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #3d4f7a;
+  --input: #2d3e5f;
+  --ring: #00d4ff;
+  --chart-1: #00d4ff;
+  --chart-2: #0099ff;
+  --chart-3: #0077cc;
+  --chart-4: #005fa3;
+  --chart-5: #003d7a;
+  --sidebar: #2d3e5f;
+  --sidebar-foreground: #ffffff;
+  --sidebar-accent: #00d4ff;
+  --sidebar-accent-foreground: #0f1b2e;
+  --sidebar-border: #3d4f7a;
+  --sidebar-ring: #00d4ff;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html {
+    color-scheme: dark;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
   }
+
+  /* 网格背景图案 */
+  body {
+    background-image:
+      linear-gradient(rgba(0, 212, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-attachment: fixed;
+  }
+
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -131,27 +177,48 @@
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
   }
+
+  /* 标题样式 */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    @apply text-white;
+  }
+
+  h1 { @apply text-4xl; }
+  h2 { @apply text-3xl; }
+  h3 { @apply text-2xl; }
+  h4 { @apply text-xl; }
+  h5 { @apply text-lg; }
+  h6 { @apply text-base; }
+
+  /* 平滑滚动 */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* 选中文本样式 */
+  ::selection {
+    @apply bg-accent text-accent-foreground;
+  }
+}
+
+@layer utilities {
+  /* Safelist - 强制 Tailwind 生成所需的语义化 utilities */
+  .__safelist {
+    @apply bg-card text-card-foreground border-border bg-background text-foreground bg-popover text-popover-foreground bg-input text-muted placeholder-muted;
+  }
 }
 
 @layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
+  /* ==================== 容器与布局 ==================== */
+  
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -162,16 +229,280 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1280px;
     }
+  }
+
+  /* ==================== 建筑蓝图风格组件 ==================== */
+
+  /* 蓝图框架卡片 */
+  .blueprint-card {
+    @apply bg-card border border-border rounded-sm;
+    box-shadow: inset 0 0 15px rgba(0, 212, 255, 0.05), 0 0 15px rgba(0, 212, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blueprint-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.02) 0%, transparent 100%);
+  }
+
+  /* 技术线条装饰 */
+  .tech-line-top {
+    @apply relative;
+    border-top: 1px solid rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+  }
+
+  .tech-line-bottom {
+    @apply relative;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+  }
+
+  .tech-accent-left {
+    @apply relative pl-4;
+    border-left: 3px solid rgba(0, 212, 255, 0.4);
+    box-shadow: inset 10px 0 15px rgba(0, 212, 255, 0.05);
+  }
+
+  /* 按钮样式 */
+  .btn-blueprint {
+    @apply px-4 py-2 rounded-sm font-semibold transition-all duration-200;
+    @apply bg-gradient-to-r from-blue-600 to-blue-700 text-white;
+    @apply border border-blue-500/30;
+    @apply shadow-lg shadow-blue-900/20;
+  }
+
+  .btn-blueprint:hover {
+    @apply from-blue-500 to-blue-600;
+    @apply shadow-xl shadow-blue-900/30;
+  }
+
+  .btn-blueprint:active {
+    @apply scale-95;
+  }
+
+  .btn-blueprint-outline {
+    @apply px-4 py-2 rounded-sm font-semibold transition-all duration-200;
+    @apply bg-transparent text-accent;
+    @apply border border-accent/40;
+  }
+
+  .btn-blueprint-outline:hover {
+    @apply bg-accent/10 border-accent/60;
+  }
+
+  .btn-blueprint-ghost {
+    @apply px-4 py-2 rounded-sm font-semibold transition-all duration-200;
+    @apply text-foreground;
+  }
+
+  .btn-blueprint-ghost:hover {
+    @apply bg-white/5;
+  }
+
+  /* 输入框样式 */
+  .input-blueprint {
+    @apply bg-input border border-border rounded-sm;
+    @apply text-foreground placeholder-muted;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background;
+    @apply transition-all duration-200;
+    @apply px-3 py-2;
+  }
+
+  .textarea-blueprint {
+    @apply bg-input border border-border rounded-sm;
+    @apply text-foreground placeholder-muted;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background;
+    @apply transition-all duration-200;
+    @apply px-3 py-2 resize-none;
+  }
+
+  /* 统计卡片 */
+  .stat-card {
+    @apply bg-card border border-border rounded-sm p-6;
+    @apply flex flex-col justify-between;
+    box-shadow: inset 0 0 15px rgba(0, 212, 255, 0.05), 0 0 15px rgba(0, 212, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-value {
+    @apply text-4xl font-bold text-accent mt-2;
+  }
+
+  .stat-label {
+    @apply text-muted text-sm;
+  }
+
+  /* 代码块样式 */
+  .code-blueprint {
+    background-color: var(--blueprint-dark);
+    @apply border border-border rounded-sm p-4;
+    @apply font-mono text-sm text-gray-300;
+    @apply overflow-x-auto;
+  }
+
+  /* 加载动画 */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+    }
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* 渐变文本 */
+  .gradient-text {
+    background: linear-gradient(to right, var(--tech-cyan), var(--tech-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-text {
+    background: linear-gradient(to right, var(--tech-cyan), var(--tech-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-text {
+    background: linear-gradient(to right, var(--tech-cyan), var(--tech-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* 网格背景容器 */
+  .grid-background {
+    background-image:
+      linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* 表格样式 */
+  .table-blueprint {
+    @apply w-full border-collapse;
+  }
+
+  .table-blueprint thead {
+    background-color: var(--blueprint-light);
+    @apply border-b border-border;
+  }
+
+  .table-blueprint th {
+    @apply px-4 py-3 text-left font-semibold text-white;
+  }
+
+  .table-blueprint tbody tr {
+    @apply border-b border-border/50 transition-colors;
+  }
+
+  .table-blueprint tbody tr:hover {
+    background-color: rgba(45, 62, 95, 0.3);
+  }
+
+  .table-blueprint td {
+    @apply px-4 py-3;
+  }
+
+  /* 标签样式 */
+  .badge-blueprint {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    @apply bg-accent/10 text-accent border border-accent/30;
+  }
+
+  .badge-success {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    @apply bg-green-500/10 text-green-400 border border-green-500/30;
+  }
+
+  .badge-warning {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    @apply bg-yellow-500/10 text-yellow-400 border border-yellow-500/30;
+  }
+
+  .badge-error {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    @apply bg-red-500/10 text-red-400 border border-red-500/30;
+  }
+
+  /* 分隔线 */
+  .divider-blueprint {
+    @apply h-px bg-gradient-to-r from-transparent via-border to-transparent;
+  }
+
+  /* 加载骨架屏 */
+  .skeleton-blueprint {
+    background-color: var(--blueprint-light);
+    @apply rounded-sm;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* 模态框背景 */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/50 backdrop-blur-sm;
+  }
+
+  /* 工具提示 */
+  .tooltip-blueprint {
+    background-color: var(--blueprint-light);
+    @apply border border-border rounded-sm px-2 py-1 text-xs text-foreground;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.1);
+  }
+
+  /* 标题样式 */
+  .heading-lg {
+    @apply text-4xl font-bold text-white;
+  }
+
+  .heading-md {
+    @apply text-2xl font-bold text-white;
+  }
+
+  .heading-sm {
+    @apply text-lg font-bold text-white;
+  }
+}
+
+/* ==================== 响应式设计 ==================== */
+
+@media (max-width: 768px) {
+  .hidden-mobile {
+    @apply hidden;
+  }
+}
+
+@media (min-width: 769px) {
+  .hidden-desktop {
+    @apply hidden;
   }
 }
