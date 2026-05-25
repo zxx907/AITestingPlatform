@@ -8,6 +8,13 @@
       "when": 1779197766207,
       "tag": "0000_powerful_franklin_richards",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1779714800427,
+      "tag": "0001_nappy_solo",
+      "breakpoints": true
     }
   ]
 }
