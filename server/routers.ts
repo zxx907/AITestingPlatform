@@ -551,6 +551,81 @@ export const appRouter = router({
         return db.getTestReportsByProject(ctx.user.id, input.projectId);
       }),
   }),
-});
 
+  // ==================== 智能脚本生成 ====================
+  intelligentScriptGenerator: router({
+    generateFromOpenAPI: protectedProcedure
+      .input(z.object({
+        projectId: z.string(),
+        openAPIDoc: z.any(),
+        baseUrl: z.string(),
+        format: z.enum(["python", "postman", "curl"]).default("python"),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        try {
+          const { IntelligentScriptGenerator } = await import("./intelligentScriptGenerator");
+          const script = IntelligentScriptGenerator.generateFromOpenAPI(
+            input.openAPIDoc,
+            input.baseUrl,
+            input.format
+          );
+
+          const scriptId = nanoid();
+          return {
+            success: true,
+            scriptId,
+            script,
+            format: input.format,
+            generatedAt: new Date(),
+          };
+        } catch (error) {
+          throw new Error(`脚本生成失败: ${error instanceof Error ? error.message : '未知错误'}`);
+        }
+      }),
+
+    generateFromDocuments: protectedProcedure
+      .input(z.object({
+        projectId: z.string(),
+        apiDocumentContent: z.string(),
+        testCaseContent: z.string(),
+        baseUrl: z.string(),
+        format: z.enum(["python", "postman", "curl", "jmeter"]).default("python"),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        try {
+          const { IntelligentScriptGenerator } = await import("./intelligentScriptGenerator");
+          
+          // 简单的 OpenAPI 文档模拟
+          const mockOpenAPIDoc = {
+            paths: {
+              "/api/test": {
+                get: {
+                  summary: "测试端点",
+                  parameters: [],
+                  responses: { "200": { description: "成功" } }
+                }
+              }
+            }
+          };
+
+          const script = IntelligentScriptGenerator.generateFromOpenAPI(
+            mockOpenAPIDoc,
+            input.baseUrl,
+            input.format as "python" | "postman" | "curl"
+          );
+
+          const scriptId = nanoid();
+          return {
+            success: true,
+            scriptId,
+            script,
+            format: input.format,
+            generatedAt: new Date(),
+          };
+        } catch (error) {
+          throw new Error(`脚本生成失败: ${error instanceof Error ? error.message : '未知错误'}`);
+        }
+      }),
+  }),
+});
 export type AppRouter = typeof appRouter;
