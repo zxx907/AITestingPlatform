@@ -136,7 +136,17 @@ export default function ScriptGenerator() {
       let cases: TestCase[] = [];
 
       if (file.name.endsWith(".json")) {
-        cases = JSON.parse(content);
+        // 尝试作为 XMind JSON 或普通 JSON 解析
+        const data = JSON.parse(content);
+        if (data.rootTopic) {
+          // XMind JSON 格式
+          cases = parseXMindJSON(data);
+        } else if (Array.isArray(data)) {
+          // 普通 JSON 数组
+          cases = data;
+        } else {
+          cases = [data];
+        }
       } else if (file.name.endsWith(".csv")) {
         // 简单的 CSV 解析
         const lines = content.split("\n");
@@ -151,6 +161,15 @@ export default function ScriptGenerator() {
             category: values[4] || "positive"
           };
         });
+      } else if (file.name.endsWith(".xmind")) {
+        // XMind 文件 - 导出为 JSON 或文本格式
+        // XMind 文件是 ZIP 格式，需要特殊处理
+        // 这里假设用户已将 XMind 导出为 JSON 或文本
+        toast.info("请将 XMind 文件导出为 JSON 或文本格式后上传");
+        return;
+      } else if (file.name.endsWith(".txt")) {
+        // XMind 导出的文本格式
+        cases = parseXMindText(content);
       } else {
         // 尝试作为 JSON 解析
         cases = JSON.parse(content);
@@ -162,6 +181,107 @@ export default function ScriptGenerator() {
     } catch (error) {
       toast.error("上传失败，请检查文件格式");
     }
+  };
+
+  // XMind JSON 解析
+  const parseXMindJSON = (data: any): TestCase[] => {
+    const testCases: TestCase[] = [];
+    const rootTopic = data.rootTopic || {};
+    const children = rootTopic.children || [];
+    
+    children.forEach((testCaseTopic: any) => {
+      const testCase: TestCase = {
+        title: testCaseTopic.title || "",
+        description: testCaseTopic.notes || "",
+        steps: [],
+        expectedResult: "",
+        category: "positive"
+      };
+      
+      if (testCaseTopic.children) {
+        testCaseTopic.children.forEach((child: any) => {
+          const title = child.title || "";
+          
+          if (title.toLowerCase().includes("预期") || title.toLowerCase().includes("expected")) {
+            testCase.expectedResult = title;
+          } else if (title.toLowerCase().includes("异常") || title.toLowerCase().includes("negative")) {
+            testCase.category = "negative";
+            testCase.steps.push(title);
+          } else if (title.toLowerCase().includes("边界") || title.toLowerCase().includes("boundary")) {
+            testCase.category = "boundary";
+            testCase.steps.push(title);
+          } else if (title.toLowerCase().includes("特殊") || title.toLowerCase().includes("edge")) {
+            testCase.category = "edge";
+            testCase.steps.push(title);
+          } else {
+            testCase.steps.push(title);
+          }
+        });
+      }
+      
+      if (testCase.steps.length === 0) {
+        testCase.steps.push("执行测试");
+      }
+      if (!testCase.expectedResult) {
+        testCase.expectedResult = "测试通过";
+      }
+      
+      testCases.push(testCase);
+    });
+    
+    return testCases;
+  };
+
+  // XMind 文本格式解析
+  const parseXMindText = (textContent: string): TestCase[] => {
+    const testCases: TestCase[] = [];
+    const lines = textContent.split("\n").filter(line => line.trim());
+    
+    let currentTestCase: TestCase | null = null;
+    
+    lines.forEach(line => {
+      const trimmed = line.trim();
+      const currentIndent = line.search(/\S/);
+      
+      if (currentIndent === 0) {
+        return;
+      } else if (currentIndent <= 2) {
+        if (currentTestCase) {
+          testCases.push(currentTestCase);
+        }
+        
+        currentTestCase = {
+          title: trimmed,
+          description: "",
+          steps: [],
+          expectedResult: "",
+          category: "positive"
+        };
+      } else if (currentTestCase && currentIndent > 2) {
+        if (trimmed.toLowerCase().includes("预期") || trimmed.toLowerCase().includes("expected")) {
+          currentTestCase.expectedResult = trimmed.replace(/^(预期|expected)[\s:：]*/, "");
+        } else if (trimmed.toLowerCase().includes("描述") || trimmed.toLowerCase().includes("description")) {
+          currentTestCase.description = trimmed.replace(/^(描述|description)[\s:：]*/, "");
+        } else if (trimmed.toLowerCase().includes("异常") || trimmed.toLowerCase().includes("negative")) {
+          currentTestCase.category = "negative";
+          currentTestCase.steps.push(trimmed);
+        } else if (trimmed.toLowerCase().includes("边界") || trimmed.toLowerCase().includes("boundary")) {
+          currentTestCase.category = "boundary";
+          currentTestCase.steps.push(trimmed);
+        } else if (trimmed.toLowerCase().includes("特殊") || trimmed.toLowerCase().includes("edge")) {
+          currentTestCase.category = "edge";
+          currentTestCase.steps.push(trimmed);
+        } else {
+          currentTestCase.steps.push(trimmed);
+        }
+      }
+    });
+    
+    if (currentTestCase) {
+      testCases.push(currentTestCase);
+    }
+    
+    return testCases;
   };
 
   const generatePostmanCollection = () => {
@@ -489,7 +609,7 @@ if __name__ == "__main__":
           </div>
           
           <p className="text-xs text-muted-foreground">
-            支持格式：JSON、CSV、Excel（已转 JSON）
+            支持格式：JSON、CSV、Excel、XMind、文本
           </p>
 
           <div
@@ -504,7 +624,7 @@ if __name__ == "__main__":
           <input
             ref={testCaseInputRef}
             type="file"
-            accept=".json,.csv,.xlsx,.xls"
+            accept=".json,.csv,.xlsx,.xls,.xmind,.txt"
             onChange={(e) => e.target.files?.[0] && handleTestCaseUpload(e.target.files[0])}
             className="hidden"
           />
